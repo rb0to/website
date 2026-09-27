@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday, Dad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,wght@0,400;0,600;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#111111;
+    --ink-soft:#1c1c1c;
+    --paper:#f4f2ec;
+    --paper-dim:#e7e3d8;
+    --line:#f4f2ec;
+    --gold:#c9a227;
+    --sky:#6fa8c9;
+    --shadow: rgba(0,0,0,.35);
+    box-sizing:border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){ --paper:#f4f2ec; --paper-dim:#e7e3d8; }
+  }
+  :root[data-theme="dark"]{ --paper:#f4f2ec; --paper-dim:#e7e3d8; }
+
+  html{ scroll-padding-top: env(safe-area-inset-top, 0px); }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Fraunces', Georgia, serif;
+    overflow-x:hidden;
+  }
+  .stripes{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      repeating-linear-gradient(90deg, #0a0a0a 0 64px, #161616 64px 128px);
+    opacity:.55;
+  }
+  .glow{
+    position:fixed; top:-20%; left:50%; transform:translateX(-50%);
+    width:140vw; height:70vh; z-index:0; pointer-events:none;
+    background:radial-gradient(ellipse at center, rgba(111,168,201,.20), transparent 65%);
+  }
+  #confetti{ position:fixed; inset:0; z-index:1; pointer-events:none; overflow:hidden; }
+  .confetti-piece{
+    position:absolute; top:-5%; width:8px; height:14px; opacity:.85;
+    animation-name:fall; animation-timing-function:linear; animation-iteration-count:infinite;
+  }
+  @keyframes fall{
+    0%{ transform:translateY(0) rotate(0deg); }
+    100%{ transform:translateY(115vh) rotate(340deg); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .confetti-piece{ animation:none; display:none; }
+  }
+
+  main{ position:relative; z-index:2; max-width:760px; margin:0 auto; padding:0 24px 96px; }
+
+  .hero{
+    min-height:100svh; min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:64px 20px 40px;
+    opacity:0; animation:rise .9s ease-out .15s forwards;
+  }
+  @keyframes rise{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+
+  .kicker{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:500;
+    color:var(--sky); font-size:clamp(14px,2.4vw,17px); letter-spacing:.02em;
+    margin:0 0 6px;
+  }
+  h1{
+    font-family:'Anton', 'Arial Narrow', sans-serif;
+    font-weight:400;
+    font-size:clamp(48px, 12vw, 108px);
+    line-height:.92;
+    margin:0;
+    letter-spacing:.01em;
+    color:var(--paper);
+    text-shadow: 0 3px 0 var(--gold);
+  }
+  .sub{
+    font-style:italic; font-weight:500; color:#cfcac0;
+    font-size:clamp(16px,2.6vw,20px);
+    margin:22px 0 0; max-width:34ch;
+  }
+
+  .player{ width:min(58vw,230px); margin:34px auto 6px; display:block; }
+
+  .whistle{
+    margin-top:34px; display:inline-flex; align-items:center; gap:10px;
+    color:#a9a49a; font-size:14px; font-style:italic;
+  }
+  .whistle svg{ width:20px; height:20px; animation:bob 2.4s ease-in-out infinite; }
+  @keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(6px);} }
+
+  section{ padding:64px 0; }
+  .eyebrow-line{
+    display:flex; align-items:center; gap:14px; margin:0 0 28px; color:#a9a49a;
+  }
+  .eyebrow-line::before, .eyebrow-line::after{
+    content:""; flex:1; height:1px; background:#3a3a3a;
+  }
+  .eyebrow-line span{ font-size:14px; font-style:italic; white-space:nowrap; }
+
+  .ticket{
+    position:relative;
+    background:var(--paper); color:var(--ink);
+    padding:46px 40px 40px;
+    clip-path: polygon(
+      0 14px, 3% 0, 97% 0, 100% 14px,
+      100% calc(100% - 14px), 97% 100%, 3% 100%, 0 calc(100% - 14px)
+    );
+  }
+  .ticket::before{
+    content:""; position:absolute; left:0; right:0; top:64%;
+    height:0; border-top:2px dashed var(--paper-dim);
+  }
+  .stub-row{
+    display:flex; justify-content:space-between; font-family:'Anton',sans-serif;
+    font-size:12px; letter-spacing:.08em; color:#8a8578; margin-bottom:26px;
+  }
+  .letter p{
+    font-size:clamp(17px,2vw,19px); line-height:1.68; margin:0 0 20px;
+    max-width:58ch;
+  }
+  .letter p:last-child{ margin-bottom:0; }
+  .letter .lede{ font-size:clamp(20px,2.6vw,24px); font-weight:600; }
+
+  .sign{
+    margin-top:38px; padding-top:24px; border-top:1px solid var(--paper-dim);
+    display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  }
+  .sign .from{ font-style:italic; font-size:15px; color:#726d60; }
+  .sign .name{
+    font-family:'Anton',sans-serif; font-size:28px; color:var(--ink);
+  }
+
+  .chips{ display:flex; flex-wrap:wrap; gap:10px; margin-top:26px; }
+  .chip{
+    border:1px solid #3a3a3a; color:#d8d4c9; padding:9px 16px;
+    font-size:14px; font-style:italic;
+  }
+
+  .quiet{ color:#b7b2a7; font-size:clamp(16px,2vw,18px); line-height:1.7; max-width:56ch; }
+
+  .kickoff{ text-align:center; padding-top:20px; }
+  .kickoff p{ color:#a9a49a; font-style:italic; margin-bottom:22px; }
+  button{
+    font-family:'Anton',sans-serif; font-size:16px; letter-spacing:.03em;
+    background:var(--gold); color:var(--ink); border:none;
+    padding:16px 34px; cursor:pointer;
+    transition: transform .15s ease;
+  }
+  button:active{ transform:scale(.96); }
+  button:focus-visible{ outline:3px solid var(--sky); outline-offset:3px; }
+
+  footer{ text-align:center; color:#5c584e; font-size:13px; padding:20px 0 6px; }
+
+  @media (max-width:480px){
+    .ticket{ padding:34px 22px 30px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stripes"></div>
+<div class="glow"></div>
+<div id="confetti"></div>
+
+<main>
+
+  <section class="hero">
+    <p class="kicker">Kick-off — the day you were born</p>
+    <h1>HAPPY<br>BIRTHDAY<br>DAD</h1>
+    <p class="sub">Newcastle's number one supporter. And, as it happens, ours too.</p>
+
+    <svg class="player" viewBox="0 0 220 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of Dad in a Newcastle shirt, smiling, standing tall beside a football">
+      <ellipse cx="110" cy="300" rx="70" ry="10" fill="#000" opacity=".35"/>
+      <!-- legs -->
+      <rect x="86" y="205" width="16" height="70" fill="#101010"/>
+      <rect x="118" y="205" width="16" height="70" fill="#101010"/>
+      <rect x="82" y="268" width="24" height="14" fill="#f4f2ec"/>
+      <rect x="114" y="268" width="24" height="14" fill="#f4f2ec"/>
+      <rect x="80" y="278" width="28" height="12" fill="#101010" rx="2"/>
+      <rect x="112" y="278" width="28" height="12" fill="#101010" rx="2"/>
+      <!-- shorts -->
+      <path d="M78 170 h64 v45 a10 10 0 0 1 -10 10 h-18 l-6 -14 -6 14 h-18 a10 10 0 0 1 -10 -10 z" fill="#0d0d0d"/>
+      <!-- torso: stripes -->
+      <clipPath id="torso"><path d="M70 88 q40 -18 80 0 l10 78 q-50 20 -100 0 z"/></clipPath>
+      <g clip-path="url(#torso)">
+        <rect x="60" y="80" width="120" height="110" fill="#f4f2ec"/>
+        <rect x="66"  y="80" width="12" height="110" fill="#111"/>
+        <rect x="90"  y="80" width="12" height="110" fill="#111"/>
+        <rect x="114" y="80" width="12" height="110" fill="#111"/>
+        <rect x="138" y="80" width="12" height="110" fill="#111"/>
+        <rect x="162" y="80" width="12" height="110" fill="#111"/>
+      </g>
+      <path d="M70 88 q40 -18 80 0 l10 78 q-50 20 -100 0 z" fill="none" stroke="#000" stroke-opacity=".15" stroke-width="2"/>
+      <!-- arms -->
+      <path d="M70 92 q-22 10 -26 46 l14 8 q8 -28 20 -36 z" fill="#f4f2ec"/>
+      <path d="M150 92 q22 10 26 46 l-14 8 q-8 -28 -20 -36 z" fill="#f4f2ec"/>
+      <circle cx="56" cy="150" r="9" fill="#e7c9ad"/>
+      <circle cx="164" cy="150" r="9" fill="#e7c9ad"/>
+      <!-- neck + head -->
+      <rect x="100" y="62" width="20" height="22" fill="#f0d9bd"/>
+      <circle cx="110" cy="48" r="34" fill="#f3e0c6"/>
+      <!-- ears -->
+      <circle cx="76" cy="50" r="6" fill="#f0d9bd"/>
+      <circle cx="144" cy="50" r="6" fill="#f0d9bd"/>
+      <!-- bald shine -->
+      <ellipse cx="110" cy="26" rx="20" ry="12" fill="#fff" opacity=".35"/>
+      <!-- eyes -->
+      <circle cx="98" cy="46" r="5.5" fill="#6fa8c9"/>
+      <circle cx="122" cy="46" r="5.5" fill="#6fa8c9"/>
+      <circle cx="98" cy="46" r="2" fill="#123"/>
+      <circle cx="122" cy="46" r="2" fill="#123"/>
+      <!-- smile -->
+      <path d="M96 62 q14 12 28 0" stroke="#8a5a3a" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <!-- crest -->
+      <circle cx="110" cy="105" r="9" fill="#6fa8c9"/>
+      <!-- ball -->
+      <g>
+        <circle cx="176" cy="255" r="17" fill="#f4f2ec"/>
+        <path d="M176 240 l8 6 -3 10 -10 0 -3 -10 z" fill="#111"/>
+        <path d="M176 238 v6 M162 250 l6 4 M190 250 l-6 4 M167 265 l4 -6 M185 265 l-4 -6" stroke="#111" stroke-width="1.6"/>
+        <circle cx="176" cy="255" r="17" fill="none" stroke="#111" stroke-width="1.4"/>
+      </g>
+    </svg>
+
+    <span class="whistle">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="1.8"><path d="M12 3v6M12 21v-6M3 12h6M21 12h-6"/></svg>
+      scroll on — extra time ahead
+    </span>
+  </section>
+
+  <section>
+    <div class="eyebrow-line"><span>Match programme — personal edition</span></div>
+    <div class="ticket letter">
+      <div class="stub-row"><span>ADMIT — ONE PROUD DAD</span><span>EVERY SEASON, EVERY YEAR</span></div>
+      <p class="lede">Dad,</p>
+      <p>Some people are handed a father from day one. I got you a different way — and somehow you still turned up every single time, as if it had always been your job to.</p>
+      <p>You didn't have to be the one who stepped up. Nobody would have blamed you for holding back. But you didn't — quietly, consistently, without ever once making it feel like a debt I owed you.</p>
+      <p>You just did what you do best: showed up, cheered the loudest, and never let me feel like anything less than yours.</p>
+      <p>So today isn't about goals, or trophies, or anything that fits on a scoreboard. It's about the stuff underneath that — the stuff that actually counts.</p>
+      <p>Happy birthday, Dad. Number one, forever.</p>
+      <div class="sign">
+        <span class="from">With all my love</span>
+        <span class="name">Elijah</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow-line"><span>Things that never made the scoreboard</span></div>
+    <p class="quiet">No stats sheet could hold this lot — they were never the kind of thing you count.</p>
+    <div class="chips">
+      <span class="chip">Every "I'm proud of you"</span>
+      <span class="chip">Every time you showed up</span>
+      <span class="chip">Every time you chose to stay</span>
+      <span class="chip">Every quiet, steady act of care</span>
+    </div>
+  </section>
+
+  <section class="kickoff">
+    <p>One more thing before full time —</p>
+    <button id="kick" type="button">Send him off in style</button>
+  </section>
+
+  <footer>Made by Elijah, for the best man in black and white.</footer>
+
+</main>
+
+<script>
+(function(){
+  var wrap = document.getElementById('confetti');
+  var colors = ['#f4f2ec','#111111','#c9a227','#6fa8c9'];
+  function piece(){
+    var d = document.createElement('div');
+    d.className = 'confetti-piece';
+    d.style.left = (Math.random()*100) + 'vw';
+    d.style.background = colors[Math.floor(Math.random()*colors.length)];
+    d.style.animationDuration = (6 + Math.random()*6) + 's';
+    d.style.animationDelay = (Math.random()*6) + 's';
+    d.style.opacity = 0.5 + Math.random()*0.4;
+    d.style.transform = 'scale(' + (0.6 + Math.random()*0.8) + ')';
+    wrap.appendChild(d);
+  }
+  for (var i=0; i<26; i++) piece();
+
+  var btn = document.getElementById('kick');
+  btn.addEventListener('click', function(){
+    for (var i=0; i<40; i++){
+      var d = document.createElement('div');
+      d.className = 'confetti-piece';
+      d.style.left = (Math.random()*100) + 'vw';
+      d.style.top = '-10px';
+      d.style.background = colors[Math.floor(Math.random()*colors.length)];
+      d.style.animationDuration = (2.2 + Math.random()*2) + 's';
+      d.style.animationDelay = (Math.random()*0.6) + 's';
+      wrap.appendChild(d);
+      (function(el){ setTimeout(function(){ el.remove(); }, 5000); })(d);
+    }
+    btn.textContent = 'Up the Toon! 🖤🤍';
+  }, { passive:true });
+})();
+</script>
+
+</body>
+</html>
